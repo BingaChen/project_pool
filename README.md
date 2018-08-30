@@ -1,2 +1,2 @@
 # project_pool
-learning project
+there are many Android knowledge points you want!
