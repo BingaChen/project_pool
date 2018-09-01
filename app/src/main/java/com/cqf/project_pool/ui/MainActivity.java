@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initData() {
         mainList.add("AlertDialog");
+        mainList.add("PopupWindow");
 
         contentsAdapter.notifyDataSetChanged();
     }
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity {
                         intentClass = AlertDialogActivity.class;
                         break;
                     case 1:
+                        intentClass=PopupWindowActivity.class;
                         break;
                 }
                 if (intentClass != null) {
