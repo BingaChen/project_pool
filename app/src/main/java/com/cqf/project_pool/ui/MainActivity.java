@@ -1,12 +1,16 @@
 package com.cqf.project_pool.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cqf.fenglib.base.BaseActivity;
+import com.cqf.fenglib.utils.MyUtils;
 import com.cqf.project_pool.R;
 import com.cqf.project_pool.adapter.ContentsAdapter;
 
@@ -26,11 +30,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        MyUtils.initLocaleLanguage(MainActivity.this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public void initView() {
         contentsAdapter = new ContentsAdapter(mainList);
@@ -38,9 +42,20 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    public static void reStart(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+    @Override
     public void initData() {
-        mainList.add("AlertDialog");
-        mainList.add("PopupWindow");
+        mainList.add(getString(R.string.AlertDialog));
+        mainList.add(getString(R.string.PopupWindow));
+        mainList.add(getString(R.string.SetLanguage));
 
         contentsAdapter.notifyDataSetChanged();
     }
@@ -57,6 +72,9 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 1:
                         intentClass=PopupWindowActivity.class;
+                        break;
+                    case 2:
+                        intentClass=SetLanguageActivity.class;
                         break;
                 }
                 if (intentClass != null) {
