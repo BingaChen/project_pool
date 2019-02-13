@@ -2,15 +2,14 @@ package com.cqf.project_pool.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.cqf.fenglib.aop.DoubleClick;
 import com.cqf.fenglib.base.BaseActivity;
-import com.cqf.fenglib.utils.MyUtils;
 import com.cqf.project_pool.R;
 import com.cqf.project_pool.adapter.ContentsAdapter;
 
@@ -27,6 +26,8 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.RvMain)
     RecyclerView RvMain;
+    @BindView(R.id.tvDoubleClick)
+    TextView tvDoubleClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,16 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+
+        tvDoubleClick.setOnClickListener(new View.OnClickListener() {
+            @DoubleClick
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,AlertDialogActivity.class));
+            }
+        });
     }
+
     @Override
     public void initView() {
         contentsAdapter = new ContentsAdapter(mainList);
@@ -51,6 +61,7 @@ public class MainActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
     @Override
     public void initData() {
         mainList.add(getString(R.string.AlertDialog));
@@ -71,10 +82,10 @@ public class MainActivity extends BaseActivity {
                         intentClass = AlertDialogActivity.class;
                         break;
                     case 1:
-                        intentClass=PopupWindowActivity.class;
+                        intentClass = PopupWindowActivity.class;
                         break;
                     case 2:
-                        intentClass=SetLanguageActivity.class;
+                        intentClass = SetLanguageActivity.class;
                         break;
                 }
                 if (intentClass != null) {
